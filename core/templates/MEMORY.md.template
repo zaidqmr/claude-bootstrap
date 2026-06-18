@@ -1,0 +1,56 @@
+# Global memory index
+
+One-line entries only (≤200 chars). Detail lives in linked files. Workstream-specific memory lives in `<workstream>/_memory/`; cd into a workstream to load it.
+
+## ACTIVE WORK (refresh on each `/save`)
+
+Three buckets. Combined cap ≤12 bullets. If you blow past, collapse or archive.
+
+### Do today / this week
+(You can act on these now. Add new in-flight items here.)
+
+### Waiting on others
+(Blocked on external input. Monitor, don't push.)
+
+### Parked / deferred
+(Off the radar by choice. Dependency missing, between cycles, or paused.)
+
+## WORKSTREAM HEAT MAP
+
+🔥 HOT = touched every session · 🌡 WARM = last 7d · 🟦 COOL = last 30d · ❄️ COLD = 30+d or parked
+
+| Workstream | Heat | Last touched | Pattern |
+|---|---|---|---|
+| (none yet — populated as you `cd` into workstreams) | | | |
+
+## SCHEDULED TASKS (recurring jobs via `/schedule`)
+
+Active rows: `- /command — cron expr — what it does`
+
+**Currently scheduled:** (none)
+
+**Candidate workflows worth scheduling** (added as patterns emerge):
+
+## USER
+
+(Facts about who you are, role, working style. Example:)
+<!-- - [User role](user_role.md) — your name, role, main workstreams -->
+
+## FEEDBACK · GLOBAL BEHAVIOR
+
+(Cross-workstream rules. Example:)
+<!-- - [No em-dashes](feedback_no_em_dashes.md) — hard rule, periods/commas/hyphens only -->
+
+## REFERENCE · UTILITIES + CANONICAL CONTEXT
+
+(External pointers, tools, canonical docs. Example:)
+<!-- - [HTML → PDF via headless Brave](reference_brave_pdf.md) — selectable text + embedded fonts -->
+
+## PROJECT · ORG-WIDE + CROSS-CUTTING
+
+(Ongoing org-wide projects. Example:)
+<!-- - [Company overview](project_company.md) — what the org is, who's in it -->
+
+## ARCHIVE
+
+`_archive/` holds superseded or expired memories (recoverable, never deleted).

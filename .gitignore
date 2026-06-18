@@ -1,0 +1,40 @@
+# macOS / Windows clutter
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor temp
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Backup files
+*.bak
+*.orig
+
+# Personal Claude state (must never be committed)
+.claude-manifest*.json
+.claude/settings.local.json
+.claude/.credentials.json
+.claude/sessions/
+.claude/history.jsonl
+.claude/cache/
+.claude/file-history/
+.claude/image-cache/
+.claude/paste-cache/
+.claude/shell-snapshots/
+.claude/projects/
+
+# Secrets (any layer)
+.env
+.env.*
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+credentials.json
+credentials/
+secrets.json
+secrets/

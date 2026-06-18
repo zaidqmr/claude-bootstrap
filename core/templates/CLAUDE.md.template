@@ -1,0 +1,130 @@
+# Global constitution
+# ~/.claude/CLAUDE.md · applies to every Claude Code session on this device.
+
+## 1. Session gate (mandatory before any work)
+
+Check if `.claude-manifest.json` exists in CWD with `"status": "active"`.
+
+If it does NOT exist or status is not "active":
+  Do not read files, run commands, or take any action.
+  Say exactly: "What are you working on this session?"
+  Wait for the user's answer.
+  Then write `.claude-manifest.json`:
+
+  ```json
+  {
+    "session_id": "<first 8 chars of uuid — run: python3 -c 'import uuid; print(str(uuid.uuid4())[:8])'>",
+    "device": "<run: hostname>",
+    "project": "<basename of CWD>",
+    "task": "<user's answer verbatim>",
+    "started_at": "<run: date -u +%Y-%m-%dT%H:%M:%SZ>",
+    "status": "active",
+    "checkpoints": []
+  }
+  ```
+
+  Then proceed.
+
+If manifest exists with status "active": proceed immediately, do not ask again.
+
+## 2. On /clear (write checkpoint before wipe)
+
+```
+python3 -c "
+import json,datetime
+with open('.claude-manifest.json') as f: m=json.load(f)
+m.setdefault('checkpoints',[]).append({'at':datetime.datetime.utcnow().isoformat()+'Z','accomplished':'ACCOMPLISHED','next':'NEXT'})
+with open('.claude-manifest.json','w') as f: json.dump(m,f,indent=2)
+"
+```
+
+Replace ACCOMPLISHED + NEXT before running.
+
+## 3. On session end (final update)
+
+```
+python3 -c "
+import json,datetime
+with open('.claude-manifest.json') as f: m=json.load(f)
+m.update({'status':'completed','completed_at':datetime.datetime.utcnow().isoformat()+'Z','what_was_built':'SUMMARY','outcome':'success','next_step':'NEXTSTEP'})
+with open('.claude-manifest.json','w') as f: json.dump(m,f,indent=2)
+"
+```
+
+## 4. Memory architecture
+
+Memory splits into **global** (cross-workstream) and **workstream-local**.
+
+- **Global index:** `{{MEM_DIR}}/MEMORY.md`
+- **Global detail:** `{{MEM_DIR}}/<file>.md`
+- **Workstream index:** `<workstream>/_memory/MEMORY.md` (auto-loaded when CWD is in the workstream)
+- **Workstream detail:** `<workstream>/_memory/<file>.md`
+
+Claude Code reads `CLAUDE.md` hierarchically from `~/.claude/` down to CWD. Workstream context loads automatically based on where you run from.
+
+### Where new memories go
+
+- Rule applies across ≥2 workstreams → **global**
+- Rule applies to one workstream only → that workstream's `_memory/`
+- Use `/save` (workstream-aware). Use `/memory-audit` for drift checks.
+
+### MEMORY.md hygiene
+
+- ONE line per entry, ≤200 chars: `- [Title](file.md) — one-line hook`
+- Detail lives in the linked file with frontmatter (`name`, `description`, `type`, `last_validated`).
+- `feedback` and `project` files use TL;DR + `**Why:**` + `**How to apply:**` structure.
+- No duplicate entries. Edit > create.
+- Stale entries archived to `_archive/` (never deleted).
+
+### What NOT to save
+
+- Code patterns, file paths, project structure — derivable from disk.
+- Git history — `git log`/`git blame` is authoritative.
+- Debugging fix recipes — fix is in code, commit has context.
+- Ephemeral task state — that's the manifest's job.
+- Deliberation paths — save only landed-on conclusions.
+
+## 5. Workstation vs skill
+
+**Workstation** = a place I work. Ongoing area with its own voice, context, accumulating memory. Folder with `CLAUDE.md` + `_memory/`.
+
+**Skill** = a thing I do. Repeatable process done the same way every time. SKILL.md in `~/.claude/skills/<name>/`.
+
+Test: "Is this a place I work, or a thing I do?" Place → workstation. Process → skill.
+
+## 6. What goes in CLAUDE.md vs MEMORY.md
+
+- **CLAUDE.md** = prescriptive ("always X", "never Y", behavioral rules, load-order, architecture). Tells Claude *how to behave*.
+- **MEMORY.md** = factual (active projects, decisions, references, who's doing what). Records *facts that could change*.
+
+`feedback` memories sit in the grey zone — rules tied to specific incidents. Keep as memories (the `Why:`/`How to apply:` context earns it). Hard globals ("no em-dashes") live in CLAUDE.md OR a feedback memory referenced from MEMORY.md, not both.
+
+`/memory-audit` flags placement drift.
+
+## 7. Workstream layout
+
+```
+<workstream>/
+├── CLAUDE.md       # workstream-specific rules + scope
+├── _memory/        # workstream-specific memory
+│   ├── MEMORY.md   # one-line index
+│   └── *.md        # detail files
+├── _scripts/       # build scripts (run via cd <workstream> && python3 _scripts/x.py)
+├── _archive/       # superseded but kept (never delete)
+└── <work products>
+```
+
+## 8. When to schedule a workflow
+
+If you're running the same workflow on a fixed cadence, wire it via `/schedule` rather than leaving it manual. The SCHEDULED TASKS section of global MEMORY.md tracks active and candidate workflows.
+
+## 9. Rules
+
+- Session gate is non-negotiable. No work before task declaration.
+- Add `.claude-manifest*.json` to `.gitignore` in all projects.
+- Sub-agents: write to `.claude-manifest-<session_id>.json`, set `is_sub_agent: true`. Preface agent prompts with "manifest is active, proceed" to skip the session gate. Restrict subagents to read-only tools (they cannot present permission prompts).
+- Bulk filesystem ops (50+ files): backup + append-only log + dry-run-by-default undo. Always.
+- Grep for a folder name BEFORE renaming the folder.
+- `/compact` at 50% context, not 95%. Performance degrades past 60–70% fill.
+- 4–6 MCPs max. More degrades the agent into tool-search mode.
+- Block at submit (PreToolUse on commit/push), not at write (PreToolUse on Edit). Mid-write blocking confuses the agent.

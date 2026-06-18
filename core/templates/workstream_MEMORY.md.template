@@ -1,0 +1,18 @@
+# <Workstream name>
+
+Workstream-local memory. Loads when you `cd` into the parent folder. Detail in linked files.
+
+## FEEDBACK · BEHAVIOR
+
+(Workstream-specific feedback memories. Examples:)
+<!-- - [Don't do X in this workstream](feedback_dont_do_x.md) — why -->
+
+## REFERENCE
+
+(Workstream-specific reference docs. Examples:)
+<!-- - [Build script reference](reference_build_script.md) — what it does -->
+
+## PROJECT
+
+(Active project state inside this workstream. Examples:)
+<!-- - [Current sprint state](project_current_sprint.md) — what's in-flight -->

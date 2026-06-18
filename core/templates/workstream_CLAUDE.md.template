@@ -1,0 +1,34 @@
+# <Workstream name>
+
+<One-paragraph scope: what this workstream is for, what kind of work happens here.>
+
+Load order: global CLAUDE.md → (parent CLAUDE.md if any) → this file → `_memory/MEMORY.md`.
+
+## Canonical artifacts
+
+- `<path/to/source-of-truth.html>` — what this is, why it's canonical
+- `_memory/` — workstream-local memory (rules, references, project state)
+
+## Local rules
+
+(Workstream-specific behavior. Examples:)
+- (e.g. specific voice/tone for content writing)
+- (e.g. specific tool preferences)
+- (e.g. anti-patterns specific to this workstream)
+
+## Tooling + references
+
+(Workflows specific to this workstream. Examples:)
+- (e.g. build script command)
+- (e.g. linked external system or doc)
+
+## Active in this workstream
+
+### Today / this week
+(What you can act on right now in this workstream.)
+
+### Open / on-deck
+(Queued, not blocked, just waiting their turn.)
+
+### Parked
+(Off the radar within this workstream.)

@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "defaultMode": "auto",
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./*.pem)",
+      "Read(./*.key)",
+      "Read(./id_rsa)",
+      "Read(./credentials.json)",
+      "Read(./credentials/*)",
+      "Bash(cat:./.env*)",
+      "Bash(cat:./.env)",
+      "Bash(grep:./.env*)",
+      "Bash(head:./.env*)",
+      "Bash(tail:./.env*)",
+      "Bash(less:./.env*)",
+      "Bash(more:./.env*)",
+      "Bash(cat:./id_rsa*)",
+      "Bash(cat:./credentials*)",
+      "Bash(cat:./*.pem)",
+      "Bash(cat:./*.key)"
+    ]
+  },
+  "hooks": {},
+  "autoUpdatesChannel": "stable"
+}
