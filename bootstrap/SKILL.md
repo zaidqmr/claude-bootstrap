@@ -270,6 +270,60 @@ F. Existing files to merge:
 
 ---
 
+## Phase 4.5 · JUDGE (per-skill calibration against this user)
+
+After Phase 4 produces the candidate install plan, do an explicit per-skill judgment pass BEFORE showing the plan. Don't blindly install everything the kit ships; don't blindly include every research finding. Judge each.
+
+For every skill, hook, MCP, or template in the candidate plan, ask:
+
+1. **Does the user already have it?** (From Phase 1 audit.) If yes, don't reinstall; offer upgrade or skip.
+2. **Does it match the user's actual work?** Examples:
+   - `/worktree-spawn` only if user has git repos with active branch work
+   - `/model-router` (opusplan) only if their plan has Opus access
+   - Per-language reviewers only if that language showed up in stack signals
+   - Playwright MCP only if UI work appeared in Phase 1
+3. **Does it conflict with something they already use?** If their CLAUDE.md says "always X" and our skill says "always Y", flag.
+4. **Is the workflow style compatible?**
+   - `/bod` + `/eod` rituals fit daily-cadence work, not sporadic
+   - `/plan-then-build` fits multi-file features, not one-file tweaks
+   - `/instinct-export`/`/instinct-import` fits multi-machine users
+5. **Will it actually be invoked?** A skill they'd never run is maintenance burden. Skip.
+
+For each item, assign one of:
+- **INSTALL** — clear yes
+- **OFFER** — borderline, include in plan but flag for explicit confirmation
+- **SKIP** — clear no
+- **DEFER** — install but disabled by default; user can enable later
+
+Build a judgment table:
+
+```
+JUDGMENT
+
+| Item | Verdict | Reason |
+|---|---|---|
+| Core: /save | INSTALL | universally useful |
+| Core: /memory-audit | INSTALL | universally useful |
+| Core: secrets-deny-pack | INSTALL | mandatory (research-backed leak risk) |
+| Optional: /worktree-spawn | INSTALL | 4 git repos, active branch work in 2 |
+| Optional: /model-router | INSTALL | Anthropic Pro plan detected |
+| Optional: /plan-then-build | OFFER | multi-file work weekly but not daily |
+| Optional: /bod + /eod | OFFER | daily cadence detected; ask if user wants rituals |
+| Optional: /instinct-export + import | INSTALL | user mentioned second machine in Phase 2 |
+| Optional: Playwright MCP | SKIP | no UI signals in stack |
+| Optional: Context7 MCP | INSTALL | Next.js + Postgres detected |
+| Optional: /catchup | OFFER | useful when returning to branches; weekly cadence |
+| Optional: /ship | INSTALL | regular PRs detected in git history |
+| ... | ... | ... |
+```
+
+Show the JUDGMENT table to the user. Say:
+> "Based on what I found, here's how I'd calibrate the install. INSTALL items are clear yes. OFFER items I want your nod on. SKIP items I'm leaving out. DEFER items I'd install disabled. Want to override any verdict?"
+
+Update the plan based on their overrides.
+
+---
+
 ## Phase 5 · Show plan as diff
 
 Present the plan to the user. For every file that will be created or modified, show:

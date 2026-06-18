@@ -11,7 +11,7 @@ Not a "copy this dotfiles repo" tool. The bootstrap skill audits what's already 
 - **Calibrated questions**: Asks only what it couldn't infer. No generic onboarding script.
 - **Mandatory safety pack**: Layered secrets-deny protection (Anthropic confirmed `.env` leak via `Bash(cat)` even when `.gitignore`'d).
 - **Proven core skills**: session-init manifest protocol, `/save` (workstream-aware), `/memory-audit`, `/retrospective`.
-- **Opt-in best-practice library**: `/catchup`, `/ship`, `/clear-handoff`, `/compact-at-50`, `/plan-then-build`, `/workstream-init`, `/model-router`, `/subagent-brief`, `/worktree-spawn`, `/extract-skill`, `/fewer-permission-prompts`.
+- **Opt-in best-practice library**: `/catchup`, `/ship`, `/clear-handoff`, `/compact-at-50`, `/plan-then-build`, `/workstream-init`, `/model-router`, `/subagent-brief`, `/worktree-spawn`, `/extract-skill`, `/fewer-permission-prompts`, `/bod` (beginning of day), `/eod` (end of day), `/instinct-export` + `/instinct-import` (portable rules between machines), `/skill-health` (skill library audit), `/rules-distill` (extract rules from session).
 - **Curated MCPs**: Context7 (live docs), Playwright (browser). Hard ceiling 4–6 MCPs total — research-backed.
 - **Curated hooks**: block-dangerous-bash, protect-secrets, auto-format, conventional-commit. Block at submit, not at write.
 - **Workstream-home pattern**: Each project owns its own `CLAUDE.md` + `_memory/` + `_scripts/`. Claude Code auto-loads hierarchically.
@@ -37,6 +37,7 @@ claude
   → Phase 2 · Calibrated questions
   → Phase 3 · Context-specific deep research (spawns agents)
   → Phase 4 · Synthesize tailored install plan
+  → Phase 4.5 · Judgment (per-skill INSTALL/OFFER/SKIP/DEFER calibrated to this user)
   → Phase 5 · Show plan as diff
   → Phase 6 · Implement on confirmation
   → Phase 7 · Report + rollback command + first 5 things to try

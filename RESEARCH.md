@@ -218,6 +218,56 @@ This kit ships ALL TEN of those.
 
 ---
 
+## Comparison: vishalmotionwork-lang/claude-code-windows-setup
+
+A community-shared Claude Code setup (773 files, June 2026) reviewed for novel patterns worth adopting.
+
+### What's in it
+- Per-language reviewers + build-resolvers (cpp, go, rust, java, kotlin, python, typescript, flutter, pytorch — each its own agent)
+- "GSD" (Get Shit Done) framework — 30+ specialist agents (gsd-planner, gsd-debugger, gsd-executor, gsd-verifier, gsd-doc-writer, etc.) + templates for every artifact type + custom JS tooling at `get-shit-done/bin/`
+- Daily rituals: `/bod`, `/eod`, `/aside`, `/checkpoint`, `/learn`, `/evolve`
+- `/instinct-export`, `/instinct-import`, `/instinct-status` — portable rules between machines
+- Multi-* commands: `/multi-frontend`, `/multi-backend`, `/multi-execute`, `/multi-plan`, `/multi-workflow`, `/orchestrate`, `/devfleet`
+- `/skill-create`, `/skill-health` — skill lifecycle
+- `/rules-distill` — distill rules from session
+- BLOCKING startup protocol that reads all `feedback_*.md` files before responding
+- Per-project `CONTEXT.md`, `SESSION.md`, `DECISIONS.md` pattern (more granular than our per-workstream MEMORY.md)
+- Auto-create project folder on first mention
+- Conventional Commits enforcement
+- `code-review-graph` MCP
+
+### What we ADOPTED (added to this kit)
+
+| Vishal pattern | Our adoption | Where |
+|---|---|---|
+| `/bod` daily ritual | `/bod` skill | `optional/skills/bod/SKILL.md` |
+| `/eod` daily ritual | `/eod` skill | `optional/skills/eod/SKILL.md` |
+| `/instinct-export` | `/instinct-export` skill | `optional/skills/instinct-export/SKILL.md` |
+| `/instinct-import` | `/instinct-import` skill | `optional/skills/instinct-import/SKILL.md` |
+| `/skill-health` | `/skill-health` skill | `optional/skills/skill-health/SKILL.md` |
+| `/rules-distill` | `/rules-distill` skill | `optional/skills/rules-distill/SKILL.md` |
+| Per-language reviewers (concept) | Deferred — `/bootstrap` Phase 3 research surfaces language-specific options based on detected stack | `bootstrap/SKILL.md` Phase 3 |
+
+### What we DELIBERATELY DID NOT adopt (anti-patterns or out-of-scope)
+
+- **30+ specialist agents** — research consensus is "custom subagent zoo" is a top anti-pattern; prefer built-in Explore/Plan agents + `Task()` for one-offs
+- **GSD JS tooling** — heavy; introduces a parallel system that has to be maintained
+- **Per-project `CONTEXT.md`/`SESSION.md`/`DECISIONS.md`** — overlaps with our manifest + workstream `_memory/` pattern. Our pattern is leaner.
+- **BLOCKING startup that reads all `feedback_*.md`** — Anthropic's `200 lines or 25KB` budget makes this expensive and unnecessary; our auto-memory loading is sufficient
+- **Multi-* command suite** — overlaps with built-in Task() subagent system + `/subagent-brief`
+- **Auto-install plugins via settings.json** — too aggressive; our kit asks per skill
+
+### Why our kit is leaner
+
+Vishal's repo is 773 files and packs nearly every imaginable workflow as a custom agent. Research strongly advises against this approach:
+- Past ~10% context spent on tool descriptions, the agent degrades into tool-search mode
+- Custom subagents for everything fragments orchestrator context
+- Maintenance burden compounds — most users abandon 80% of installed skills
+
+Our kit ships 4 always-installed core skills + 17 opt-in optional skills + 4 hooks + 2 MCP recommendations. The `/bootstrap` Judgment phase calibrates which of those 17 the user actually gets. Most users end up with 4-8 active skills, not 50+.
+
+If a user actively wants Vishal's maximalist methodology, they can install his repo on top of ours — they don't conflict.
+
 ## Provenance of this kit's design choices
 
 - **Workstream-home pattern** (`<workstream>/_memory/ + _scripts/ + _archive/`): synthesized from community workspace patterns + a working production system. Battle-tested across 10 workstreams + 190 memory files.
