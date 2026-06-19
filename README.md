@@ -20,15 +20,17 @@ Not a "copy this dotfiles repo" tool. The bootstrap skill audits what's already 
 
 ## How it works
 
+**Fastest path (one command):**
+
 ```bash
-# 1 · Clone (private repo · needs gh CLI logged in OR git HTTPS/SSH access)
-gh repo clone zaidqmr/claude-bootstrap
-cd claude-bootstrap
+curl -fsSL https://raw.githubusercontent.com/zaidqmr/claude-bootstrap/main/install.sh | bash
+```
 
-# 2 · Install (drops only /bootstrap skill, no other changes)
-bash install.sh
+That self-clones the repo to `~/claude-bootstrap` and installs the `/bootstrap` skill. Nothing else changes.
 
-# 3 · Open Claude Code and run the skill
+Then:
+
+```bash
 claude
 > /bootstrap
 
@@ -42,6 +44,16 @@ claude
   → Phase 6 · Implement on confirmation
   → Phase 7 · Report + rollback command + first 5 things to try
 ```
+
+**Manual path (if you prefer to inspect first):**
+
+```bash
+git clone https://github.com/zaidqmr/claude-bootstrap.git
+cd claude-bootstrap
+bash install.sh
+```
+
+Then `claude` + `/bootstrap`.
 
 ## Updating later
 

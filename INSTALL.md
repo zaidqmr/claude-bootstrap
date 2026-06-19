@@ -9,21 +9,26 @@ One-page setup. Designed for someone who has Claude Code installed and wants a c
 - Git installed
 - This folder on your machine
 
-## Step 1 · Clone + run the installer
+## Step 1 · Install (one line)
 
 ```bash
-gh repo clone zaidqmr/claude-bootstrap
-cd claude-bootstrap
-bash install.sh
+curl -fsSL https://raw.githubusercontent.com/zaidqmr/claude-bootstrap/main/install.sh | bash
 ```
 
-If `gh` isn't installed, fall back to plain git:
+This:
+1. Self-clones the repo to `~/claude-bootstrap`
+2. Copies the `/bootstrap` skill into `~/.claude/skills/bootstrap/`
+3. Stops there — nothing else changes until `/bootstrap` runs
+
+If you'd rather inspect the code first:
 
 ```bash
 git clone https://github.com/zaidqmr/claude-bootstrap.git
 cd claude-bootstrap
 bash install.sh
 ```
+
+Same result.
 
 This drops the `/bootstrap` skill into `~/.claude/skills/bootstrap/`. Nothing else is touched yet.
 
