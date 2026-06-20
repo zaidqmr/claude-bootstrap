@@ -355,6 +355,15 @@ After all writes:
 
 ---
 
+## Phase 6.5 · Confirm the Self-Improvement Protocol is wired
+
+After files are written in Phase 6, explicitly verify that the global `CLAUDE.md` contains the Self-Improvement Protocol section (Section 9 in the template). Open it and check.
+
+If somehow missing (older template, user merge stripped it), insert it now. Without it, the system is just a static install, not a learning baseline.
+
+Tell the user:
+> "Self-Improvement Protocol is wired into your global CLAUDE.md. Every correction you give from now on will trigger a 'why' question + codification into the right layer (memory / CLAUDE.md / skill / hook). The baseline you just installed is v0.1; every rule you codify is a version bump."
+
 ## Phase 7 · Report + first 5 things to try
 
 Print to the user:

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- KnowAI Document Template · locked format · fill the CONTENT, never touch the <style> -->
+<title>[Document title] — KnowAI</title>
+<style>
+  /* Aeonik (KnowAI primary) — ship a sibling fonts/ folder, or it falls back to Inter Tight */
+  @font-face { font-family: 'Aeonik'; font-weight: 300; font-style: normal; src: url('fonts/AeonikTRIAL-Light.otf') format('opentype'); font-display: swap; }
+  @font-face { font-family: 'Aeonik'; font-weight: 400; font-style: normal; src: url('fonts/AeonikTRIAL-Regular.otf') format('opentype'); font-display: swap; }
+  @font-face { font-family: 'Aeonik'; font-weight: 400; font-style: italic; src: url('fonts/AeonikTRIAL-RegularItalic.otf') format('opentype'); font-display: swap; }
+  @font-face { font-family: 'Aeonik'; font-weight: 700; font-style: normal; src: url('fonts/AeonikTRIAL-Bold.otf') format('opentype'); font-display: swap; }
+  @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --blue: #146DF7;
+    --blue-ink: #0F55C6;
+    --blue-deep: #0A3C91;
+    --blue-soft: #CFF0FF;
+
+    --ink: #05121B;
+    --ink-2: #10222F;
+    --ink-3: #4C5963;
+    --ink-4: #5B6B76;
+    --ink-5: #A6B5BF;
+
+    --paper: #F7F7F7;
+    --surface: #FFFFFF;
+    --surface-2: #FAFAFA;
+
+    --gray-100: #F5F5F5;
+    --gray-200: #E7E7E8;
+    --gray-300: #D1D5D8;
+
+    --hairline: rgba(5,18,27,0.08);
+    --divider: rgba(5,18,27,0.06);
+
+    --r-sm: 6px; --r-md: 10px; --r-lg: 14px; --r-xl: 20px; --r-pill: 999px;
+
+    --shadow-xs: 0 1px 2px rgba(5,18,27,.05);
+    --shadow-sm: 0 1px 2px rgba(5,18,27,.06), 0 1px 3px rgba(5,18,27,.04);
+    --shadow-md: 0 2px 6px rgba(5,18,27,.06), 0 8px 24px -12px rgba(5,18,27,.10);
+
+    --font-sans: 'Aeonik', 'Inter Tight', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  ::selection { background: var(--blue-soft); color: var(--blue-deep); }
+
+  .shell { max-width: 1440px; margin: 0 auto; padding: 56px 48px 120px; }
+  @media (max-width: 900px) { .shell { padding: 32px 20px 80px; } }
+
+  /* ===== Header ===== */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--blue);
+  }
+  h1.page-title {
+    font-family: var(--font-sans);
+    font-size: 44px; font-weight: 700;
+    letter-spacing: -0.035em; line-height: 1.05;
+    color: var(--ink);
+    margin: 8px 0 6px;
+  }
+  .page-sub { color: var(--ink-3); font-size: 16px; max-width: 760px; }
+
+  .header {
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--hairline);
+    margin-bottom: 32px;
+  }
+
+  .props {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px 32px;
+    margin-top: 24px;
+  }
+  @media (max-width: 800px) { .props { grid-template-columns: repeat(2, 1fr); } }
+  .prop-k {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 4px;
+  }
+  .prop-v { font-size: 14px; color: var(--ink); }
+
+  /* ===== Welcome ===== */
+  .welcome {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-left: 3px solid var(--blue);
+    border-radius: var(--r-md);
+    padding: 18px 22px;
+    margin-bottom: 40px;
+    font-size: 15px;
+    color: var(--ink-2);
+    box-shadow: var(--shadow-xs);
+  }
+  .welcome strong { color: var(--ink); font-weight: 700; }
+  .welcome em {
+    font-style: normal; font-family: var(--font-mono);
+    font-size: 12px; padding: 1px 6px; background: var(--gray-100);
+    border-radius: var(--r-sm); color: var(--ink);
+  }
+
+  /* ===== Status legend ===== */
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 10px 16px;
+    align-items: center;
+    margin-bottom: 32px;
+    padding: 14px 18px;
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-xs);
+  }
+  .legend-label {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-3);
+    margin-right: 4px;
+  }
+
+  /* ===== TOC ===== */
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-lg);
+    padding: 28px 32px;
+    margin-bottom: 56px;
+    box-shadow: var(--shadow-xs);
+  }
+  .toc-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--divider);
+  }
+  .toc-head h3 {
+    font-family: var(--font-sans);
+    font-size: 22px; font-weight: 700;
+    letter-spacing: -0.015em; color: var(--ink);
+  }
+  .toc-head-meta { font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); }
+
+  .toc-sections { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px 32px; }
+  @media (max-width: 1100px) { .toc-sections { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 720px)  { .toc-sections { grid-template-columns: 1fr; } }
+
+  .toc-sec-label {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--blue-soft);
+  }
+  .toc a {
+    color: var(--ink); font-size: 14px;
+    display: flex; align-items: baseline; gap: 10px;
+    padding: 4px 0;
+  }
+  .toc a:hover { color: var(--blue); text-decoration: none; }
+  .toc-num {
+    font-family: var(--font-mono); font-weight: 500;
+    font-size: 12px; color: var(--ink-4);
+    min-width: 22px; font-variant-numeric: tabular-nums;
+  }
+
+  /* ===== Section banner ===== */
+  .section-banner {
+    margin: 64px 0 24px;
+    padding: 24px 0 18px;
+    border-top: 1px solid var(--hairline);
+  }
+  .section-banner h2 {
+    font-family: var(--font-sans);
+    font-size: 32px; font-weight: 700;
+    letter-spacing: -0.025em; line-height: 1.15;
+    color: var(--ink);
+    margin: 6px 0 4px;
+  }
+  .section-banner p {
+    color: var(--ink-3); font-size: 15px; max-width: 780px;
+  }
+
+  /* ===== Topic card ===== */
+  .topic {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-lg);
+    padding: 24px 28px;
+    margin-bottom: 16px;
+    scroll-margin-top: 24px;
+    box-shadow: var(--shadow-xs);
+  }
+  .topic-head {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--divider);
+    margin-bottom: 18px;
+  }
+  .topic-num {
+    width: 36px; height: 36px;
+    background: var(--ink); color: var(--surface);
+    border-radius: var(--r-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-weight: 600; font-size: 13px;
+    flex-shrink: 0; font-variant-numeric: tabular-nums;
+  }
+  .topic-title-block { flex: 1; min-width: 0; }
+  .topic-name {
+    font-family: var(--font-sans);
+    font-size: 20px; font-weight: 700;
+    letter-spacing: -0.015em; line-height: 1.25;
+    color: var(--ink);
+  }
+  .topic-meta {
+    margin-top: 6px;
+    display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center;
+  }
+
+  /* ===== Status pill ===== */
+  .status {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 10px;
+    border-radius: var(--r-pill);
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    background: var(--gray-100); color: var(--ink-3);
+    border: 1px solid var(--hairline);
+  }
+  .status::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--ink-5);
+  }
+  .status.live { background: #E6F7F0; color: #1F6B4D; border-color: #BFE6D6; }
+  .status.live::before { background: #00B67A; }
+  .status.building { background: #FFF4E5; color: #8A4B00; border-color: #FFD9A8; }
+  .status.building::before { background: #F59E0B; }
+  .status.planned { background: #EEF2FF; color: #3949A2; border-color: #C7D2FE; }
+  .status.planned::before { background: #6366F1; }
+
+  /* ===== Field grid ===== */
+  .fields {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 32px;
+  }
+  @media (max-width: 760px) { .fields { grid-template-columns: 1fr; } }
+
+  .field {
+    display: flex; flex-direction: column; gap: 4px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--divider);
+  }
+  .field:nth-last-child(-n+2) { border-bottom: none; }
+  @media (max-width: 760px) {
+    .field { border-bottom: 1px solid var(--divider); }
+    .field:last-child { border-bottom: none; }
+    .field:nth-last-child(2) { border-bottom: 1px solid var(--divider); }
+  }
+
+  .field-label {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .field-value {
+    font-size: 14.5px; line-height: 1.55; color: var(--ink-2);
+  }
+  .field-value.empty { color: var(--ink-5); font-style: italic; font-size: 13.5px; }
+  .field-value ul, .field-value ol { padding-left: 18px; margin-top: 4px; }
+  .field-value li { margin-bottom: 4px; }
+  .field-value strong { color: var(--ink); font-weight: 700; }
+  .field-value code {
+    font-family: var(--font-mono); font-size: 12.5px;
+    background: var(--gray-100); padding: 1px 6px; border-radius: var(--r-sm); color: var(--ink);
+  }
+  .field-value h4 {
+    font-size: 13px; font-weight: 700; color: var(--ink);
+    margin-top: 10px; margin-bottom: 4px;
+    letter-spacing: -0.005em;
+  }
+
+  .footer {
+    margin-top: 96px;
+    padding-top: 24px;
+    border-top: 1px solid var(--hairline);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-4);
+    text-align: center;
+  }
+
+  @media print {
+    .topic { break-inside: avoid; box-shadow: none; }
+    .toc { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ===== Header ===== -->
+  <div class="header">
+    <div class="eyebrow">[Doc type · sub-label]</div>
+    <h1 class="page-title">[Document title]</h1>
+    <div class="page-sub">[One sentence: what this document is and who it's for.]</div>
+
+    <div class="props">
+      <div><div class="prop-k">Audience</div><div class="prop-v">[who reads this]</div></div>
+      <div><div class="prop-k">Author</div><div class="prop-v">[name]</div></div>
+      <div><div class="prop-k">Last updated</div><div class="prop-v">[YYYY-MM-DD]</div></div>
+      <div><div class="prop-k">Sections</div><div class="prop-v">[N] blocks · [M] sections</div></div>
+    </div>
+  </div>
+
+  <!-- ===== Welcome callout (always include one short "how to read this" para) ===== -->
+  <div class="welcome">
+    <strong>How to read this.</strong> [One paragraph framing the document: its shape,
+    its purpose, and any convention the reader needs — e.g. that each block carries a
+    <em>status</em> pill.]
+  </div>
+
+  <!-- ===== Status legend (OPTIONAL — keep only if topics use status pills) ===== -->
+  <div class="legend">
+    <span class="legend-label">Status legend</span>
+    <span class="status live">Live</span>
+    <span style="font-size:13px;color:var(--ink-3);">shipped, running today</span>
+    <span class="status building">Building</span>
+    <span style="font-size:13px;color:var(--ink-3);">actively in flight</span>
+    <span class="status planned">Planned</span>
+    <span style="font-size:13px;color:var(--ink-3);">designed, not yet started</span>
+  </div>
+
+  <!-- ===== Contents ===== -->
+  <div class="toc">
+    <div class="toc-head">
+      <h3>Contents</h3>
+      <span class="toc-head-meta">[N] topics</span>
+    </div>
+
+    <div class="toc-sections">
+      <div>
+        <div class="toc-sec-label">A · [Section name]</div>
+        <a href="#t1"><span class="toc-num">1.</span> [Topic name]</a>
+        <a href="#t2"><span class="toc-num">2.</span> [Topic name]</a>
+      </div>
+      <div>
+        <div class="toc-sec-label">B · [Section name]</div>
+        <a href="#t3"><span class="toc-num">3.</span> [Topic name]</a>
+      </div>
+      <!-- add one column per section group -->
+    </div>
+  </div>
+
+  <!-- ===== SECTION A ===== -->
+  <div class="section-banner">
+    <div class="eyebrow">Section A</div>
+    <h2>[Section name]</h2>
+    <p>[One line on what this section covers.]</p>
+  </div>
+
+  <!-- Topic card — duplicate per topic, bump the number + id -->
+  <div class="topic" id="t1">
+    <div class="topic-head">
+      <div class="topic-num">1</div>
+      <div class="topic-title-block">
+        <div class="topic-name">[Topic name]</div>
+        <!-- optional status pill -->
+        <div class="topic-meta"><span class="status live">Live</span></div>
+      </div>
+    </div>
+    <div class="fields">
+      <div class="field"><div class="field-label">What it is</div><div class="field-value">[Plain answer. Use <strong>emphasis</strong> sparingly and inline <code>code</code> for exact terms.]</div></div>
+      <div class="field"><div class="field-label">Why it exists</div><div class="field-value">[The reason this block matters.]</div></div>
+      <div class="field"><div class="field-label">How it works</div><div class="field-value">
+        <ul>
+          <li>[point]</li>
+          <li>[point]</li>
+        </ul>
+      </div></div>
+      <div class="field"><div class="field-label">Reader takeaway</div><div class="field-value">[The single thing to remember from this block.]</div></div>
+    </div>
+  </div>
+
+  <div class="topic" id="t2">
+    <div class="topic-head">
+      <div class="topic-num">2</div>
+      <div class="topic-title-block">
+        <div class="topic-name">[Topic name]</div>
+        <div class="topic-meta"><span class="status building">Building</span></div>
+      </div>
+    </div>
+    <div class="fields">
+      <div class="field"><div class="field-label">[Label]</div><div class="field-value">[value]</div></div>
+      <div class="field"><div class="field-label">[Label]</div><div class="field-value">[value]</div></div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION B ===== -->
+  <div class="section-banner">
+    <div class="eyebrow">Section B</div>
+    <h2>[Section name]</h2>
+    <p>[One line.]</p>
+  </div>
+
+  <div class="topic" id="t3">
+    <div class="topic-head">
+      <div class="topic-num">3</div>
+      <div class="topic-title-block">
+        <div class="topic-name">[Topic name]</div>
+      </div>
+    </div>
+    <div class="fields">
+      <div class="field"><div class="field-label">[Label]</div><div class="field-value">[value]</div></div>
+      <div class="field"><div class="field-label">[Label]</div><div class="field-value">[value]</div></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    KnowAI · [Doc type] · [YYYY-MM-DD] · Last reviewed by [name]
+  </div>
+
+</div>
+
+</body>
+</html>

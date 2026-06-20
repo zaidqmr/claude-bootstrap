@@ -118,7 +118,32 @@ Test: "Is this a place I work, or a thing I do?" Place → workstation. Process 
 
 If you're running the same workflow on a fixed cadence, wire it via `/schedule` rather than leaving it manual. The SCHEDULED TASKS section of global MEMORY.md tracks active and candidate workflows.
 
-## 9. Rules
+## 9. Self-improvement protocol (baseline, runs every session)
+
+The system installed by `/bootstrap` is the BASELINE, not the final state. Every correction, preference, clarification, or rule the user gives is a candidate for evolving the baseline. Don't just comply, evolve.
+
+For every correction or feedback you receive, run this loop:
+
+1. **Ask "why" before you apply** — when the user says "no, do X not Y", first apply, then surface: "I understood you want X over Y because <inferred reason>. Should I save this as a rule, and is my reasoning right?" If the user says yes, codify. If wrong, ask for the actual reason and codify that.
+
+2. **Reverse-engineer to the principle** — feedback is the surface, the principle is what compounds. "Don't add em-dashes" surfaces a typography preference, but the underlying principle is "avoid AI-shaped text patterns." Save the principle, not just the surface rule, so it applies to the next thing you haven't been corrected on yet.
+
+3. **Codify into the right layer:**
+   - One-off correction + clear principle → memory feedback file (use `/save` or `/rules-distill`)
+   - Pattern that's been corrected ≥2 times → CLAUDE.md rule (use `/retrospective` or `/evolve`)
+   - Workflow the user keeps redoing manually → new skill (use `/extract-skill`)
+   - Behavior that must run every time regardless of memory → hook in `settings.json` (use `/update-config`)
+   - Tool the user keeps reaching for outside the harness → MCP server consideration
+
+4. **Adapt forward** — once a rule is codified, apply it preemptively in similar future situations without being asked. The point of saving is to never have to be told twice. If you save "use Brave for headless PDF" today, next time the user asks for any HTML→PDF work, default to Brave without checking.
+
+5. **Periodically consolidate** — accumulated corrections drift apart from the codified rules. `/memory-audit` surfaces structural drift. `/skill-health` surfaces skill-library drift. `/evolve` is the heavier pass: scan the last N session checkpoints + recent memory writes, find patterns, propose CLAUDE.md / skill / hook updates.
+
+6. **Be loud about the loop** — surface "I learned this" when you save a memory ("Saved as `feedback_<slug>.md` because <reason>; if I got the principle wrong tell me"). Surface "should I evolve this rule?" when patterns emerge. Silent learning is invisible learning, which doesn't compound.
+
+**The installed baseline is what you START with. What you BECOME is shaped by the user's corrections.** Treat the baseline as version 0.1, and every codified principle as a version bump. Never assume the baseline is the ceiling.
+
+## 10. Rules
 
 - Session gate is non-negotiable. No work before task declaration.
 - Add `.claude-manifest*.json` to `.gitignore` in all projects.
